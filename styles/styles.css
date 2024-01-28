@@ -1,0 +1,45 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+#bakery {
+  background-color: burlywood;
+  height: 100vh;
+  position: relative;
+}
+
+#oven {
+  background-color: gray;
+  width: 30vw;
+  height: 40vh;
+  position: absolute;
+
+  left: 0;
+}
+
+#preparing-area {
+  background-color: whitesmoke;
+  width: 30vw;
+  height: 40vh;
+  position: absolute;
+  bottom: 0;
+}
+
+#serving-area {
+  background-color: pink;
+  width: 30vw;
+  height: 40vh;git remote add origin https://github.com/maridivi/pastelaria-game.git
+  position: absolute;
+  bottom: 0;
+  left: 30vw;
+}
+
+#money-counter {
+  background-color: darkgreen;
+  width: 30vw;
+  height: 20vh;
+  position: absolute;
+  bottom: 0;
+  left: 60vw;
+}
