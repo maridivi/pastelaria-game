@@ -13,31 +13,86 @@ class CustomerOrder {
 }
 
 class Game {
-  constructor(batchesPrepared, customers, sales) {
+  constructor(customers, sales) {
     this.timeRemaining = 300; //time left to finish the game in seconds
     this.budget = 50; //budget in euros
     this.customers = customers;
-    this.sales = this.batchesReady = batchesPrepared;
+    this.sales = sales;
+    this.currentBatch = null;
+    this.batchesBaked = [];
   }
-  startNewBatch() {}
-  serveCustomers() {}
+  getBatchesAmount() {
+    return this.batchesBaked.length;
+  }
+  bakeNewBatch() {
+    if (this.budget >= 10) {
+      this.currentBatch = new Batch("baking");
+      this.budget -= 10; // Deduct cost of preparing a batch
+      this.batchesBaked.push(this.currentBatch);
+    }
+  }
+  updateBudgetDisplay() {
+    const displayedBudget = document.getElementById("budget");
+    displayedBudget.innerText = this.budget + " €";
+  }
+  finishBakingBatch() {
+    if (this.currentBatch) {
+      this.currentBatch.status = "baked";
+      // Other logic for a prepared batch, like making it draggable
+      this.currentBatch.moveToServingArea();
+    }
+  }
+  sellPasteis(quantity) {}
 }
 
 class Pastel {
-  constructor(cost) {
-    cost = 2;
+  constructor(status) {
+    this.cost = 2;
   }
 }
 
 class Batch {
-  constructor(batchStatus) {
-    this.preparingTime = 12;
+  constructor(status) {
     this.bakingTime = 6;
-    this.pasteis = [];
+
     this.size = 48;
-    this.batchStatus = batchStatus;
+    this.status = status;
   }
   startPreparing() {}
-  moveToOven() {}
+  moveToServingArea() {
+    const tray = document.getElementById("tray");
+    tray.setAttribute("draggable", "true");
+    const servingArea = document.getElementById("serving-area");
+    tray.addEventListener("dragstart", (event) => {
+      event.dataTransfer.setData("text/plain", "tray");
+    });
+    servingArea.addEventListener("dragover", (event) => {
+      event.preventDefault();
+    });
+    servingArea.addEventListener("drop", (event) => {
+      event.preventDefault();
+
+      const data = event.dataTransfer.getData("text/plain");
+      if (data === "tray") {
+        servingArea.appendChild(tray);
+      }
+    });
+  }
   finishBaking() {}
 }
+const game1 = new Game();
+
+game1.updateBudgetDisplay();
+
+const preparingButton = document.getElementById("start-preparing");
+preparingButton.addEventListener("click", function () {
+  preparingButton.setAttribute("disabled", "true");
+  preparingButton.innerText = "Preparing...";
+  game1.bakeNewBatch();
+  game1.updateBudgetDisplay();
+  //   batch1.status = "preparing";
+  setTimeout(function () {
+    preparingButton.innerText = "Ready!";
+    game1.finishBakingBatch();
+  }, 5000);
+});

@@ -35,11 +35,17 @@ body {
   left: 30vw;
 }
 
-#money-counter {
+#budget {
   background-color: darkgreen;
   width: 30vw;
   height: 20vh;
   position: absolute;
   bottom: 0;
   left: 60vw;
+}
+
+#tray {
+  background-color: black;
+  width: 20vw;
+  height: 10vh;
 }
